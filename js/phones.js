@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) => {
+const loadPhone = async (searchText = "iphone", isShowAll) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -37,7 +37,7 @@ const displayPhones = (phones, isShowAll) => {
         <h2 class="card-title">${phone.phone_name}</h2>
         <p>There are many variations of passages of available, but the majority have suffered</p>
         <div class="card-actions">
-        <button class="btn btn-primary">Show Details</button>
+        <button onclick="handleShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
         </div>
     </div>
     `;
@@ -66,3 +66,37 @@ const loadingData = (isLoading) => {
 const handleShowAll = () => {
   searchPhone(true);
 };
+
+const handleShowDetails = async (id) => {
+  console.log("clicked", id);
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await res.json();
+  const phoneDetails = data.data;
+  // console.log(phoneDetails);
+  showPhoneDetails(phoneDetails);
+};
+const showPhoneDetails = (phone) => {
+  loadingData(true);
+  show_details_modal.showModal();
+  const phoneName = document.getElementById("show-detail-phone-name");
+  const phoneImg = document.getElementById("show-detail-image");
+  phoneImg.innerHTML = `
+    <figure class="p-10">
+      <img
+        class="mx-auto"
+        src="${phone.image}"
+        alt="${phone?.name}"
+        class="rounded-xl"
+      />
+    </figure>
+  `;
+  phoneName.innerText = phone.name;
+  const showDetailContainer = document.getElementById("show-details-container");
+  showDetailContainer.innerHTML = `
+<p><span>Storage: </span>${phone?.mainFeatures?.storage}</p>
+  `;
+};
+
+loadPhone();
