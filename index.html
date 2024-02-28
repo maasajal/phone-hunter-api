@@ -13,7 +13,7 @@
   </head>
   <body>
     <header>
-      <div class="bg-gray-100 pb-60 relative">
+      <div class="bg-gray-100 sm:pb-60 relative">
         <nav>
           <div class="navbar">
             <div class="navbar-start">
@@ -36,10 +36,10 @@
           <a class="btn btn-primary">Buy Now</a>
         </div>
       </div>
-      <div class="absolute top-80 left-[20%]">
-        <img class="w-3/4" src="./images/banner.png" alt="banner" />
+      <div class="sm:absolute top-80 left-[10%]">
+        <img class="w-3/4 mx-auto" src="./images/banner.png" alt="banner" />
       </div>
-      <div class="text-center mt-64">
+      <div class="text-center sm:mt-64">
         <h2 class="text-4xl mb-8">Search your phone</h2>
         <div class="join">
           <input
@@ -55,10 +55,16 @@
     </header>
     <main class="container mx-auto">
       <section>
+        <div id="loading" class="text-center my-28 hidden">
+          <span class="loading loading-bars loading-lg"></span>
+        </div>
         <div
           id="phones-container"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
+        ></div>
+        <!-- Show all data by clicking a button -->
+        <div id="show-all-phone" class="text-center hidden">
+          <button class="btn btn-primary px-12 my-8">Show All</button>
         </div>
       </section>
     </main>

@@ -9,10 +9,19 @@ const loadPhone = async (searchText) => {
 const displayPhones = (phones) => {
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.textContent = "";
+  const showAllContainer = document.getElementById("show-all-phone");
+  if (phones.length > 12) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    showAllContainer.classList.add("hidden");
+  }
+
+  phones = phones.slice(0, 12);
+
   phones.forEach((phone) => {
     console.log(phone);
     const phoneCard = document.createElement("div");
-    phoneCard.classList = "card bg-base-100 shadow-xl";
+    phoneCard.classList = "card bg-base-100 shadow-xl m-4";
 
     phoneCard.innerHTML = `
     <figure class="px-10 pt-10">
@@ -32,11 +41,22 @@ const displayPhones = (phones) => {
     `;
     phonesContainer.appendChild(phoneCard);
   });
+  loadingData(false);
 };
 
 const searchPhone = () => {
+  loadingData(true);
   const searchPhone = document.getElementById("search");
   const searchPhoneValue = searchPhone.value;
   loadPhone(searchPhoneValue);
   searchPhone.value = "";
+};
+
+const loadingData = (isLoading) => {
+  const searchLoading = document.getElementById("loading");
+  if (isLoading) {
+    searchLoading.classList.remove("hidden");
+  } else {
+    searchLoading.classList.add("hidden");
+  }
 };
